@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vehiculo {
     // Atributos
     private String placa;
@@ -54,5 +57,12 @@ public class Vehiculo {
         System.out.println("Línea: " + linea);
         System.out.println("Fecha de ingreso: " + fechaIngreso);
         System.out.println("Nombre del dueño: " + nombreDueño);
+    }
+
+    private static List<Vehiculo> listaVehiculos = new ArrayList<>();
+
+    // Método para agregar un vehículo a la lista
+    public static void agregarVehiculo(Vehiculo vehiculo) {
+        listaVehiculos.add(vehiculo);
     }
 }
