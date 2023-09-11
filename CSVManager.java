@@ -11,15 +11,10 @@ public class CSVManager {
         List<String[]> datos = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
-            String primeraLinea = br.readLine();
-            if (primeraLinea != null) {
-                String[] columnas = primeraLinea.split(SEPARADOR);
-
-                String linea;
-                while ((linea = br.readLine()) != null) {
-                    String[] campos = linea.split(SEPARADOR);
-                    datos.add(campos);
-                }
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] campos = linea.split(SEPARADOR);
+                datos.add(campos);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -31,15 +26,7 @@ public class CSVManager {
     // Método para guardar datos en un archivo CSV desde una lista de strings
     public static void guardarEnCSV(List<String[]> datos, String archivo) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo))) {
-            if (!datos.isEmpty()) {
-                // Escribir las columnas en la primera línea
-                String[] columnas = datos.get(0);
-                bw.write(String.join(SEPARADOR, columnas));
-                bw.newLine();
-            }
-
-            for (int i = 1; i < datos.size(); i++) {
-                String[] fila = datos.get(i);
+            for (String[] fila : datos) {
                 bw.write(String.join(SEPARADOR, fila));
                 bw.newLine();
             }
@@ -47,9 +34,16 @@ public class CSVManager {
             e.printStackTrace();
         }
     }
-    public static Vehiculo buscarVehiculoPorPlaca(String placa) {
-        List<String[]> datos = cargarDesdeCSV("C:\\Users\\javib\\OneDrive\\Escritorio\\Programas\\POOvehiculos\\vehiculos.csv");
-    
+
+    // Método para cargar reparaciones desde un archivo CSV específico (reparaciones.csv)
+    public static List<String[]> cargarReparacionesDesdeCSV(String archivo) {
+        return cargarDesdeCSV(archivo);
+    }
+
+    // Método para buscar un vehículo por placa en un archivo CSV específico
+    public static Vehiculo buscarVehiculoPorPlaca(String placa, String archivo) {
+        List<String[]> datos = cargarDesdeCSV(archivo);
+
         if (!datos.isEmpty()) {
             // Verificar si la primera fila contiene las columnas esperadas
             String[] columnas = datos.get(0);
@@ -59,7 +53,7 @@ public class CSVManager {
                 Arrays.asList(columnas).contains("Línea") &&
                 Arrays.asList(columnas).contains("FechaIngreso") &&
                 Arrays.asList(columnas).contains("NombreDueño")) {
-    
+
                 // Buscar la placa en los datos
                 for (int i = 1; i < datos.size(); i++) {
                     String[] fila = datos.get(i);
@@ -70,16 +64,15 @@ public class CSVManager {
                         String linea = fila[Arrays.asList(columnas).indexOf("Línea")];
                         String fechaIngreso = fila[Arrays.asList(columnas).indexOf("FechaIngreso")];
                         String nombreDueño = fila[Arrays.asList(columnas).indexOf("NombreDueño")];
-    
+
                         // Crea un objeto Vehiculo con los datos encontrados
                         return new Vehiculo(placa, marca, modelo, linea, fechaIngreso, nombreDueño);
                     }
                 }
             }
         }
-    
+
         // Si no se encontró la placa o las columnas esperadas, devuelve null
         return null;
     }
-    
 }
