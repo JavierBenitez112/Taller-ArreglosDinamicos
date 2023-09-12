@@ -5,10 +5,7 @@ import java.util.Scanner;
 
 public class GestionarSucursales {
 
-    public static void main(String[] args) {
-        ArrayList<String> sucursales = cargarSucursalesDesdeCSV("sucursales.csv");
-        Scanner sc = new Scanner(System.in);
-
+    public static void gestionarSucursales(Scanner sc, List<String> sucursales, String archivoCSV) {
         boolean submenuSedes = true;
 
         do {
@@ -19,23 +16,24 @@ public class GestionarSucursales {
             System.out.println("4. Salir");
             System.out.println("Elija una opción: ");
             int opcionSedes = sc.nextInt();
+            sc.nextLine(); // Consumir el carácter de nueva línea
 
             switch (opcionSedes) {
                 case 1:
                     // Agregar nueva sucursal
                     System.out.println("Ingrese el nombre de la nueva sucursal: ");
-                    String nuevaSucursal = sc.next();
+                    String nuevaSucursal = sc.nextLine();
                     sucursales.add(nuevaSucursal);
-                    guardarSucursalesEnCSV("sucursales.csv", sucursales);
+                    guardarSucursalesEnCSV(archivoCSV, sucursales);
                     System.out.println("Nueva sucursal agregada con éxito.");
                     break;
                 case 2:
                     // Absorber una sucursal
                     System.out.println("Seleccione la sucursal a absorber (ingrese el nombre): ");
-                    String sucursalAabsorber = sc.next();
+                    String sucursalAabsorber = sc.nextLine();
                     if (sucursales.contains(sucursalAabsorber)) {
                         sucursales.remove(sucursalAabsorber);
-                        guardarSucursalesEnCSV("sucursales.csv", sucursales);
+                        guardarSucursalesEnCSV(archivoCSV, sucursales);
                         System.out.println("Sucursal absorbiendo información de " + sucursalAabsorber);
                     } else {
                         System.out.println("La sucursal no existe.");
@@ -56,8 +54,7 @@ public class GestionarSucursales {
             }
         } while (submenuSedes);
     }
-
-    private static ArrayList<String> cargarSucursalesDesdeCSV(String archivoCSV) {
+    public static ArrayList<String> cargarSucursalesDesdeCSV(String archivoCSV) {
         ArrayList<String> sucursales = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new FileReader(archivoCSV));
@@ -72,7 +69,7 @@ public class GestionarSucursales {
         return sucursales;
     }
 
-    private static void guardarSucursalesEnCSV(String archivoCSV, ArrayList<String> sucursales) {
+    private static void guardarSucursalesEnCSV(String archivoCSV, List<String> sucursales) {
         try {
             BufferedWriter bw = new BufferedWriter(new FileWriter(archivoCSV));
             for (String sucursal : sucursales) {

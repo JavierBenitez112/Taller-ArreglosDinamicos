@@ -1,12 +1,13 @@
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Reparación {
     private int numeroFactura;
     private String tipoReparacion;
-    private String fechaReparacion;
+    private Date fechaReparacion; // Cambiar el tipo a Date
     private double montoTotal;
 
-    public Reparación(int numeroFactura, String tipoReparacion, String fechaReparacion, double montoTotal) {
+    public Reparación(int numeroFactura, String tipoReparacion, Date fechaReparacion, double montoTotal) {
         this.numeroFactura = numeroFactura;
         this.tipoReparacion = tipoReparacion;
         this.fechaReparacion = fechaReparacion;
@@ -30,11 +31,11 @@ public class Reparación {
         this.tipoReparacion = tipoReparacion;
     }
 
-    public String getFechaReparacion() {
+    public Date getFechaReparacion() { 
         return fechaReparacion;
     }
 
-    public void setFechaReparacion(String fechaReparacion) {
+    public void setFechaReparacion(Date fechaReparacion) { 
         this.fechaReparacion = fechaReparacion;
     }
 
@@ -51,7 +52,8 @@ public class Reparación {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         System.out.println("Número de Factura: " + numeroFactura);
         System.out.println("Tipo de Reparación: " + tipoReparacion);
-        System.out.println("Fecha de Reparación: " + dateFormat.format(fechaReparacion));
+        System.out.println("Fecha de Reparación: " + dateFormat.format(fechaReparacion)); // Formatear la fecha
         System.out.println("Monto Total: $" + montoTotal);
+
     }
 }

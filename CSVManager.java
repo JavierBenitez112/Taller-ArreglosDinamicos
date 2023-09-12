@@ -35,6 +35,16 @@ public class CSVManager {
         }
     }
 
+    // Método para guardar datos de reparación en un archivo CSV de reparaciones
+    public static void guardarReparacionEnCSV(String[] datosReparacion, String archivo) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archivo, true))) {
+            bw.newLine(); // Agregar una línea en blanco antes de los nuevos datos
+            bw.write(String.join(SEPARADOR, datosReparacion));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     // Método para cargar reparaciones desde un archivo CSV específico (reparaciones.csv)
     public static List<String[]> cargarReparacionesDesdeCSV(String archivo) {
         return cargarDesdeCSV(archivo);
